@@ -21,7 +21,14 @@ namespace BeFaster.App.Solutions
 
     public class CheckoutEngine
     {
-        private readonly IDictionary<char, Item> _priceList = new Dictionary<char, Item>();
+        private readonly IDictionary<char, Item> _priceList = new Dictionary<char, Item>
+        {
+            {'A',new Item('A',50)},
+            {'B',new Item('A',30)},
+            {'C',new Item('A',20)},
+            {'D',new Item('A',15)}
+        };
+
         private IList<Item> _basket = new List<Item>();
 
         public bool Contains(char sku)
@@ -48,5 +55,13 @@ namespace BeFaster.App.Solutions
 
     public class Item 
     {
+        public char Sku { get; }
+        public int Price { get; }
+
+        public Item(char sku, int price)
+        {
+            Sku = sku;
+            Price = price;
+        }
     }
 }
