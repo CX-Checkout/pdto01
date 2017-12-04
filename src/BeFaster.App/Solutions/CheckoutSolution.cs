@@ -100,7 +100,7 @@ namespace BeFaster.App.Solutions
 
     public class Discount
     {
-        readonly IList<KeyValuePair<int, int>> _conditions;
+        readonly IList<KeyValuePair<int, int>> _conditions = new List<KeyValuePair<int, int>>();
         public char Sku { get; }
 
         public Discount(char sku, params KeyValuePair<int, int>[] conditions)
