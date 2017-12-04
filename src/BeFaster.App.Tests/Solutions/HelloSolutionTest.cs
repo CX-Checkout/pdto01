@@ -4,12 +4,13 @@ using NUnit.Framework;
 namespace BeFaster.App.Tests.Solutions
 {
     [TestFixture]
-    public class SumSolutionTest
+    public class HelloSolutionTest
     {
-        [TestCase(1, 1, ExpectedResult = 2)]
-        public int ComputeSum(int x, int y)
+       
+        [Test]
+        public void Hello()
         {
-            return SumSolution.Sum(x, y);
+            Assert.That(HelloSolution.Hello("my Friend"), Is.EqualTo("Hello, my Friend!"));
         }
     }
 }
