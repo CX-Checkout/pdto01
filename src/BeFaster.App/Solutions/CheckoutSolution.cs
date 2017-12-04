@@ -26,12 +26,7 @@ namespace BeFaster.App.Solutions
             {'D', new Item('D', 15)}
         };
 
-        private readonly IList<Item> _basket = new List<Item>();
-
-        public bool Contains(char sku)
-        {
-            return _priceList.ContainsKey(sku);
-        }
+        private readonly Basket _basket = new Basket();
 
         public void Add(char sku)
         {
@@ -45,26 +40,41 @@ namespace BeFaster.App.Solutions
 
         public int CalculateTotal()
         {
+            return _basket.CalculateTotal();
+        }
+    }
+
+    public class Basket
+    {
+        private readonly IList<Item> _basket = new List<Item>();
+
+        public void Add(Item item)
+        {
+            _basket.Add(item);
+        }
+
+        public int CalculateTotal()
+        {
             if (_basket.Contains(null)) return -1;
-            var total = _basket.Select(x=>x.Price).Sum();
+            var total = _basket.Select(x => x.Price).Sum();
             return total - CalculateDiscount();
         }
 
         private int CalculateDiscount()
         {
             int totalDiscount = 0;
-            foreach (Item listedItem in _priceList.Values.Where(item =>item.HasDiscount()).ToList())
+            var distinctItems = _basket.Where(item=>item.HasDiscount()).Distinct();
+            foreach (Item listedItem in distinctItems)
             {
                 totalDiscount += CalculateItemDiscount(listedItem);
-
             }
             return totalDiscount;
         }
 
         private int CalculateItemDiscount(Item listedItem)
         {
-            var applicableDiscount = _basket.Count(x => x.Sku.Equals(listedItem.Sku)) / listedItem.Discount.NumberOfItems;
-            return listedItem.Discount.Amount * applicableDiscount;
+            var applicableTimes = _basket.Count(x => x.Sku.Equals(listedItem.Sku)) / listedItem.Discount.NumberOfItems;
+            return listedItem.Discount.Amount * applicableTimes;
         }
     }
 
@@ -99,6 +109,22 @@ namespace BeFaster.App.Solutions
         public bool HasDiscount()
         {
             return Discount != null;
+        }
+        
+        protected bool Equals(Item other)
+        {
+            return Sku == other.Sku && Price == other.Price && Equals(Discount, other.Discount);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Sku.GetHashCode();
+                hashCode = (hashCode * 397) ^ Price;
+                hashCode = (hashCode * 397) ^ (Discount != null ? Discount.GetHashCode() : 0);
+                return hashCode;
+            }
         }
     }
 }
