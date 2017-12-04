@@ -63,7 +63,8 @@ namespace BeFaster.App.Solutions
 
         private int CalculateItemDiscount(Item listedItem)
         {
-            return listedItem.Discount.Amount * (_basket.Count(x => x.Sku.Equals(listedItem.Sku)) % listedItem.Discount.NumberOfItems);
+            var applicableDiscount = _basket.Count(x => x.Sku.Equals(listedItem.Sku)) / listedItem.Discount.NumberOfItems;
+            return listedItem.Discount.Amount * applicableDiscount;
         }
     }
 
