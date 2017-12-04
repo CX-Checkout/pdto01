@@ -6,18 +6,15 @@ namespace BeFaster.App.Solutions
 {
     public static class CheckoutSolution
     {
-        private static readonly CheckoutEngine CheckoutEngine = new CheckoutEngine();
-
         public static int Checkout(string skus)
         {
+            var checkoutEngine = new CheckoutEngine();
             foreach (char sku in skus)
             {
-                CheckoutEngine.Add(sku);
+                checkoutEngine.Add(sku);
             }
-            return CheckoutEngine.CalculateTotal();
+            return checkoutEngine.CalculateTotal();
         }
-
-        
     }
 
     public class CheckoutEngine
