@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BeFaster.App.Solutions
@@ -47,7 +46,24 @@ namespace BeFaster.App.Solutions
         public int CalculateTotal()
         {
             if (_basket.Contains(null)) return -1;
-            return _basket.Select(x=>x.Price).Sum();
+            var total = _basket.Select(x=>x.Price).Sum();
+            return total - CalculateDiscount();
+        }
+
+        private int CalculateDiscount()
+        {
+            int totalDiscount = 0;
+            foreach (Item listedItem in _priceList.Values.Where(item =>item.HasDiscount()).ToList())
+            {
+                totalDiscount += CalculateItemDiscount(listedItem);
+
+            }
+            return totalDiscount;
+        }
+
+        private int CalculateItemDiscount(Item listedItem)
+        {
+            return listedItem.Discount.Amount * (_basket.Count(x => x.Sku.Equals(listedItem.Sku)) % listedItem.Discount.NumberOfItems);
         }
     }
 
@@ -67,7 +83,7 @@ namespace BeFaster.App.Solutions
     {
         public char Sku { get; }
         public int Price { get; }
-        private Discount Discount { get; }
+        public Discount Discount { get; }
 
         public Item(char sku, int price) : this(sku, price, null)
         {}
@@ -77,6 +93,11 @@ namespace BeFaster.App.Solutions
             Sku = sku;
             Price = price;
             Discount = discount;
+        }
+
+        public bool HasDiscount()
+        {
+            return Discount != null;
         }
     }
 }
