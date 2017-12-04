@@ -29,10 +29,9 @@ namespace BeFaster.App.Solutions
 
         private readonly IList<Discount> configuredDiscounts = new List<Discount>
         {
-            new Discount('A', 20, 3) ,
-            new Discount('A', 50, 5) ,
+            new Discount('A', new KeyValuePair<int, int>(3,20), new KeyValuePair<int,int>(5,50)),
             new Discount('B', 15, 2) ,
-            new Discount('E', 'B', 2)
+            //new Discount('E', 'B', 2)
         };
 
         private readonly Basket _basket = new Basket();
@@ -49,7 +48,7 @@ namespace BeFaster.App.Solutions
 
         public int CalculateTotal()
         {
-            return _basket.CalculateTotal();
+            return _basket.CalculateTotal(configuredDiscounts);
         }
     }
 
@@ -62,42 +61,78 @@ namespace BeFaster.App.Solutions
             _basket.Add(item);
         }
 
-        public int CalculateTotal()
+        public int CalculateTotal(IList<Discount> configuredDiscounts)
         {
             if (_basket.Contains(null)) return -1;
             var total = _basket.Select(x => x.Price).Sum();
-            return total - CalculateDiscount();
+            return total - CalculateDiscount(configuredDiscounts);
         }
 
-        private int CalculateDiscount()
+        private int CalculateDiscount(IList<Discount> configuredDiscounts)
         {
             int totalDiscount = 0;
-            var distinctItems = _basket.Where(item=>item.HasDiscount()).Distinct();
-            foreach (Item listedItem in distinctItems)
+            foreach (Discount discount in configuredDiscounts)
             {
-                totalDiscount += CalculateItemDiscount(listedItem);
+                totalDiscount += CalculateItemDiscount(discount);
             }
             return totalDiscount;
         }
 
-        private int CalculateItemDiscount(Item listedItem)
+        private int CalculateItemDiscount(Discount discount)
         {
-            var applicableTimes = _basket.Count(x => x.Sku.Equals(listedItem.Sku)) / listedItem.Discount.NumberOfItems;
-            return listedItem.Discount.Amount * applicableTimes;
+            var items = _basket.Where(item => item.Sku == discount.Sku);
+            if (!items.Any()) return 0;
+
+            int discountAmount = 0;
+            if (items.Count() > discount.Max())
+            {
+                var applicableTimes = _basket.Count(x => x.Sku.Equals(discount.Sku)) / discount.Max();
+                discountAmount += applicableTimes * discount.MaxValue();
+            }
+            if (discountAmount > 0 && discount.Min()!= discount.Max())
+            {
+                var applicableTimes = (_basket.Count(x => x.Sku.Equals(discount.Sku)) % discount.Max()) / discount.Min();
+                discountAmount += applicableTimes * discount.MinValue();
+            }
+            return discountAmount;
         }
     }
 
     public class Discount
     {
+        readonly IList<KeyValuePair<int, int>> _conditions;
         public char Sku { get; }
-        public int Amount { get; }
-        public int NumberOfItems { get; }
+
+        public Discount(char sku, params KeyValuePair<int, int>[] conditions)
+        {
+            _conditions = conditions.ToList();
+            Sku = sku;
+        }
 
         public Discount(char sku, int amount, int numberOfItems)
         {
             Sku = sku;
-            Amount = amount;
-            NumberOfItems = numberOfItems;
+            _conditions.Add(new KeyValuePair<int, int>(numberOfItems, amount));
+        }
+
+        public int Max()
+        {
+            return _conditions.Max(c => c.Key);
+        }
+
+        public int MaxValue()
+        {
+            return _conditions.Max(c => c.Value);
+        }
+
+        public int Min()
+        {
+            return _conditions.Min(c => c.Key);
+        }
+
+        public int MinValue()
+        {
+            return _conditions.Min(c => c.Value);
         }
     }
 
