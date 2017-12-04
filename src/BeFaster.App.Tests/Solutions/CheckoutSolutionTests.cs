@@ -7,6 +7,7 @@ namespace BeFaster.App.Tests.Solutions
     public class CheckoutSolutionTests
     {
         [TestCase("AABBCCDDAAB", 325)]
+        [TestCase("AAAAA", 200)]
         [TestCase("ABCD", 115)]
         [TestCase("fsdfd", -1)]
         public void Checkout(string skus, int expectedTotal)
