@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeFaster.App.Solutions
 {
     public static class CheckoutSolution
     {
-        private static readonly CheckoutEngine _checkoutEngine = new CheckoutEngine();
+        private static readonly CheckoutEngine CheckoutEngine = new CheckoutEngine();
 
         public static int Checkout(string skus)
         {
             foreach (char sku in skus)
             {
-                _checkoutEngine.Add(sku);
+                CheckoutEngine.Add(sku);
             }
-            return _checkoutEngine.CalculateTotal();
+            return CheckoutEngine.CalculateTotal();
         }
 
         
@@ -23,13 +24,13 @@ namespace BeFaster.App.Solutions
     {
         private readonly IDictionary<char, Item> _priceList = new Dictionary<char, Item>
         {
-            {'A',new Item('A',50)},
-            {'B',new Item('A',30)},
-            {'C',new Item('A',20)},
-            {'D',new Item('A',15)}
+            {'A', new Item('A', 50)},
+            {'B', new Item('B', 30)},
+            {'C', new Item('C', 20)},
+            {'D', new Item('D', 15)}
         };
 
-        private IList<Item> _basket = new List<Item>();
+        private readonly IList<Item> _basket = new List<Item>();
 
         public bool Contains(char sku)
         {
@@ -49,7 +50,7 @@ namespace BeFaster.App.Solutions
         public int CalculateTotal()
         {
             if (_basket.Contains(null)) return -1;
-            return 100;
+            return _basket.Select(x=>x.Price).Sum();
         }
     }
 
