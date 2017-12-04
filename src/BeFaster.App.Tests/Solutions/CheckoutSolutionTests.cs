@@ -8,7 +8,9 @@ namespace BeFaster.App.Tests.Solutions
     {
         [TestCase("AABBCCDDAAB", 325)]
         [TestCase("AAAAA", 200)]
-        [TestCase("ABCD", 115)]
+        [TestCase("AAAAAAAA", 330)]
+        [TestCase("AAAAAAAAAAAAA", 530)]
+        [TestCase("ABCDE", 155)]
         [TestCase("fsdfd", -1)]
         public void Checkout(string skus, int expectedTotal)
         {

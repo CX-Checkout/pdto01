@@ -84,12 +84,12 @@ namespace BeFaster.App.Solutions
             if (!items.Any()) return 0;
 
             int discountAmount = 0;
-            if (items.Count() > discount.Max())
+            if (items.Count() >= discount.Max())
             {
                 var applicableTimes = _basket.Count(x => x.Sku.Equals(discount.Sku)) / discount.Max();
                 discountAmount += applicableTimes * discount.MaxValue();
             }
-            if (discountAmount > 0 && discount.Min()!= discount.Max())
+            if (discountAmount >= 0 && discount.Min()!= discount.Max())
             {
                 var applicableTimes = (_basket.Count(x => x.Sku.Equals(discount.Sku)) % discount.Max()) / discount.Min();
                 discountAmount += applicableTimes * discount.MinValue();
