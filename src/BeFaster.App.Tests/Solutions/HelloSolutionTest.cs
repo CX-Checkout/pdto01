@@ -10,7 +10,7 @@ namespace BeFaster.App.Tests.Solutions
         [Test]
         public void Hello()
         {
-            Assert.That(HelloSolution.Hello("my Friend"), Is.EqualTo("Hello, World!"));
+            Assert.That(HelloSolution.Hello("my Friend"), Is.EqualTo("Hello, my Friend!"));
         }
     }
 }
