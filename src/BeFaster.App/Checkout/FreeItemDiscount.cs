@@ -3,22 +3,24 @@ using System.Linq;
 
 namespace BeFaster.App.Checkout
 {
-    public class Discount : IDiscount
+    public class FreeItemDiscount : IDiscount
     {
+        private readonly Item _freeItem;
         public char Sku { get; }
         public int MatchingQuantity { get; }
-        public int DiscountValue { get; }
+        public int DiscountValue => _freeItem.Price;
 
-        public Discount(char sku, int matchingQuantity, int discountAmount)
+        public FreeItemDiscount(char sku, int matchingQuantity, Item freeItem)
         {
+            _freeItem = freeItem;
             Sku = sku;
             MatchingQuantity = matchingQuantity;
-            DiscountValue = discountAmount;
         }
 
         public bool CanApplyTo(IList<Item> itemsLeft)
         {
-            return itemsLeft.Count(item => item.Sku == Sku) >= MatchingQuantity;
+            var can = itemsLeft.Count(item => item.Sku == Sku) >= MatchingQuantity && itemsLeft.Any(item => item.Equals(_freeItem));
+            return can;
         }
 
         public int ApplyDiscount(ref IList<Item> itemsLeft)
@@ -28,14 +30,8 @@ namespace BeFaster.App.Checkout
             {
                 itemsLeft.Remove(item);
             }
+            itemsLeft.Remove(_freeItem);
             return DiscountValue;
         }
-    }
-
-    public interface IDiscount
-    {
-        bool CanApplyTo(IList<Item> itemsLeft);
-        int ApplyDiscount(ref IList<Item> itemsLeft);
-        int DiscountValue { get; }
     }
 }
