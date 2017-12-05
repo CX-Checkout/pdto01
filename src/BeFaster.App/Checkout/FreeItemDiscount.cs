@@ -19,8 +19,9 @@ namespace BeFaster.App.Checkout
 
         public bool CanApplyTo(IList<Item> itemsLeft)
         {
-            var can = itemsLeft.Count(item => item.Sku == Sku) >= MatchingQuantity && itemsLeft.Any(item => item.Equals(_freeItem));
-            return can;
+            var can1 = itemsLeft.Count(item => item.Sku == Sku) >= MatchingQuantity;
+            var can2 = itemsLeft.Any(item => item.Equals(_freeItem));
+            return can1 && can2;
         }
 
         public int ApplyDiscount(ref IList<Item> itemsLeft)
