@@ -22,6 +22,7 @@ namespace BeFaster.App.Tests.Solutions
         [TestCase("BB", 45)]
         [TestCase("KK", 150)]
         [TestCase("FFF", 20)]
+        [TestCase("QQQ", 80)]
         [TestCase("AAAAAAAA", 330)]
         [TestCase("AAAAAAAAAAAAA", 530)]
         [TestCase("ABCDE", 155)]
