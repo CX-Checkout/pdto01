@@ -10,7 +10,12 @@ namespace BeFaster.App.Checkout
             Sku = sku;
             Price = price;
         }
-        
+
+        public override bool Equals(object obj)
+        {
+            return Equals((Item) obj);
+        }
+
         protected bool Equals(Item other)
         {
             return Sku == other.Sku && Price == other.Price;
