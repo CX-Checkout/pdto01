@@ -5,21 +5,22 @@ namespace BeFaster.App.Checkout
 {
     public class DiscountEngine
     {
-        private readonly IList<Discount> _configuredDiscounts;
+        private readonly Discounts _configuredDiscounts;
         private IList<Item> _items;
 
         public DiscountEngine(IList<Discount> configuredDiscounts)
         {
-            _configuredDiscounts = configuredDiscounts;
+            _configuredDiscounts = new Discounts(configuredDiscounts);
         }
 
         public int CalculateDiscount(IList<Item> items)
         {
             _items = items;
+            var itemsLeft = _items;
             int totalDiscount = 0;
-            foreach (Discount discount in _configuredDiscounts)
+            while (_configuredDiscounts.CanApplyTo(itemsLeft))
             {
-                totalDiscount += CalculateItemDiscount(discount);
+                totalDiscount += _configuredDiscounts.ApplyDiscount(ref itemsLeft);
             }
             return totalDiscount;
         }
@@ -41,6 +42,21 @@ namespace BeFaster.App.Checkout
                 discountAmount += applicableTimes * discount.MinValue();
             }
             return discountAmount;
+        }
+    }
+
+    public class Discounts
+    {
+        private readonly IList<Discount> _configuredDiscounts;
+
+        public Discounts(IList<Discount> configuredDiscounts)
+        {
+            _configuredDiscounts = configuredDiscounts;
+        }
+
+        public bool CanApplyTo(IList<Item> itemsLeft)
+        {
+            return _configuredDiscounts.Select(d => d.CanApplyTo(itemsLeft)).Any();
         }
     }
 }

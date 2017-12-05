@@ -39,5 +39,14 @@ namespace BeFaster.App.Checkout
         {
             return _conditions.Min(c => c.Value);
         }
+
+        public bool CanApplyTo(IList<Item> itemsLeft)
+        {
+            foreach (var condition in _conditions)
+            {
+                if (itemsLeft.Count(item => item.Sku == Sku) >= condition.Key) return true;
+            }
+            return false;
+        }
     }
 }
