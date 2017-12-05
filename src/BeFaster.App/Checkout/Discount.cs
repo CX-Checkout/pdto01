@@ -25,9 +25,9 @@ namespace BeFaster.App.Checkout
             return itemsLeft.Count(item => item.Sku == Sku) >= Condition.Key;
         }
 
-        public int CalculateAmount(ref IList<Item> itemsLeft)
+        public int ApplyDiscount(ref IList<Item> itemsLeft)
         {
-            var itemDiscounted = itemsLeft.Where(item => item.Sku == Sku).Take(Condition.Key);
+            var itemDiscounted = itemsLeft.Where(item => item.Sku == Sku).Take(Condition.Key).ToList();
             foreach (var item in itemDiscounted)
             {
                 itemsLeft.Remove(item);
