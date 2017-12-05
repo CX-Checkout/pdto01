@@ -7,17 +7,14 @@ namespace BeFaster.App.Checkout
     {
         public readonly KeyValuePair<int, int> Condition;
         public char Sku { get; }
+        public int Matching { get; }
+        public int Value { get; }
 
-        public Discount(char sku, KeyValuePair<int, int> condition)
-        {
-            Condition = condition;
-            Sku = sku;
-        }
-
-        public Discount(char sku, int amount, int numberOfItems)
+        public Discount(char sku, int matchingQuantity, int discountAmount)
         {
             Sku = sku;
-            Condition = new KeyValuePair<int, int>(numberOfItems, amount);
+            Matching = matchingQuantity;
+            Value = discountAmount;
         }
 
         public bool CanApplyTo(IList<Item> itemsLeft)

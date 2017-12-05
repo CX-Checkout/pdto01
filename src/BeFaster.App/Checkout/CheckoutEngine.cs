@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BeFaster.App.Checkout
 {
@@ -15,9 +16,9 @@ namespace BeFaster.App.Checkout
 
         private readonly IList<Discount> configuredDiscounts = new List<Discount>
         {
-            new Discount('A', new KeyValuePair<int, int>(3,20)), 
-            new Discount('A', new KeyValuePair<int,int>(5,50)),
-            new Discount('B', 15, 2) ,
+            new Discount('A', 20, 3), 
+            new Discount('A', 50, 5),
+            new Discount('B', 2, 15) ,
             //new Discount('E', 'B', 2)
         };
 
