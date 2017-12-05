@@ -24,25 +24,6 @@ namespace BeFaster.App.Checkout
             }
             return totalDiscount;
         }
-
-        private int CalculateItemDiscount(Discount discount)
-        {
-            var items = _items.Where(item => item.Sku == discount.Sku);
-            if (!items.Any()) return 0;
-
-            int discountAmount = 0;
-            if (items.Count() >= discount.Max())
-            {
-                var applicableTimes = _items.Count(x => x.Sku.Equals(discount.Sku)) / discount.Max();
-                discountAmount += applicableTimes * discount.MaxValue();
-            }
-            if (discountAmount >= 0 && discount.Min() != discount.Max())
-            {
-                var applicableTimes = (_items.Count(x => x.Sku.Equals(discount.Sku)) % discount.Max()) / discount.Min();
-                discountAmount += applicableTimes * discount.MinValue();
-            }
-            return discountAmount;
-        }
     }
 
     public class Discounts
@@ -51,12 +32,19 @@ namespace BeFaster.App.Checkout
 
         public Discounts(IList<Discount> configuredDiscounts)
         {
-            _configuredDiscounts = configuredDiscounts;
+            _configuredDiscounts = configuredDiscounts.OrderByDescending(d=>d.Condition.Value).ToList();
         }
 
         public bool CanApplyTo(IList<Item> itemsLeft)
         {
             return _configuredDiscounts.Select(d => d.CanApplyTo(itemsLeft)).Any();
+        }
+
+        public int ApplyDiscount(ref IList<Item> itemsLeft)
+        {
+            var items = itemsLeft;
+            var nextDiscount = _configuredDiscounts.First(d => d.CanApplyTo(items));
+            return nextDiscount.CalculateAmount(ref itemsLeft);
         }
     }
 }

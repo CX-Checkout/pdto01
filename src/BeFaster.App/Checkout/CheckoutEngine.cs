@@ -15,7 +15,8 @@ namespace BeFaster.App.Checkout
 
         private readonly IList<Discount> configuredDiscounts = new List<Discount>
         {
-            new Discount('A', new KeyValuePair<int, int>(3,20), new KeyValuePair<int,int>(5,50)),
+            new Discount('A', new KeyValuePair<int, int>(3,20)), 
+            new Discount('A', new KeyValuePair<int,int>(5,50)),
             new Discount('B', 15, 2) ,
             //new Discount('E', 'B', 2)
         };

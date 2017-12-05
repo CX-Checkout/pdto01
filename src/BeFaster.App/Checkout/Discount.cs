@@ -5,48 +5,34 @@ namespace BeFaster.App.Checkout
 {
     public class Discount
     {
-        readonly IList<KeyValuePair<int, int>> _conditions = new List<KeyValuePair<int, int>>();
+        public readonly KeyValuePair<int, int> Condition;
         public char Sku { get; }
 
-        public Discount(char sku, params KeyValuePair<int, int>[] conditions)
+        public Discount(char sku, KeyValuePair<int, int> condition)
         {
-            _conditions = conditions.ToList();
+            Condition = condition;
             Sku = sku;
         }
 
         public Discount(char sku, int amount, int numberOfItems)
         {
             Sku = sku;
-            _conditions.Add(new KeyValuePair<int, int>(numberOfItems, amount));
-        }
-
-        public int Max()
-        {
-            return _conditions.Max(c => c.Key);
-        }
-
-        public int MaxValue()
-        {
-            return _conditions.Max(c => c.Value);
-        }
-
-        public int Min()
-        {
-            return _conditions.Min(c => c.Key);
-        }
-
-        public int MinValue()
-        {
-            return _conditions.Min(c => c.Value);
+            Condition = new KeyValuePair<int, int>(numberOfItems, amount);
         }
 
         public bool CanApplyTo(IList<Item> itemsLeft)
         {
-            foreach (var condition in _conditions)
+            return itemsLeft.Count(item => item.Sku == Sku) >= Condition.Key;
+        }
+
+        public int CalculateAmount(ref IList<Item> itemsLeft)
+        {
+            var itemDiscounted = itemsLeft.Where(item => item.Sku == Sku).Take(Condition.Key);
+            foreach (var item in itemDiscounted)
             {
-                if (itemsLeft.Count(item => item.Sku == Sku) >= condition.Key) return true;
+                itemsLeft.Remove(item);
             }
-            return false;
+            return Condition.Value;
         }
     }
 }
