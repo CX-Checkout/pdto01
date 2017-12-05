@@ -14,12 +14,12 @@ namespace BeFaster.App.Checkout
             {'E', new Item('D', 40)}
         };
 
-        private readonly IList<Discount> configuredDiscounts = new List<Discount>
+        private readonly IList<IDiscount> configuredDiscounts = new List<IDiscount>
         {
             new Discount('A', 3, 20), 
             new Discount('A', 5, 50),
-            new Discount('B', 2, 15) ,
-            //new Discount('E', 'B', 2)
+            new Discount('B', 2, 15),
+            new FreeItemDiscount('E', 2, new Item('B', 30)),
         };
 
         private readonly Basket _basket = new Basket();
@@ -39,4 +39,6 @@ namespace BeFaster.App.Checkout
             return _basket.CalculateTotal(configuredDiscounts);
         }
     }
+
+    
 }

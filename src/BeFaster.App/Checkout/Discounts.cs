@@ -5,9 +5,9 @@ namespace BeFaster.App.Checkout
 {
     public class Discounts
     {
-        private readonly IList<Discount> _configuredDiscounts;
+        private readonly IList<IDiscount> _configuredDiscounts;
 
-        public Discounts(IList<Discount> configuredDiscounts)
+        public Discounts(IList<IDiscount> configuredDiscounts)
         {
             _configuredDiscounts = configuredDiscounts.OrderByDescending(d=>d.DiscountValue).ToList();
         }

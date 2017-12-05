@@ -12,7 +12,7 @@ namespace BeFaster.App.Checkout
             _items.Add(item);
         }
 
-        public int CalculateTotal(IList<Discount> configuredDiscounts)
+        public int CalculateTotal(IList<IDiscount> configuredDiscounts)
         {
             if (_items.Contains(null)) return -1;
             var total = _items.Select(x => x.Price).Sum();

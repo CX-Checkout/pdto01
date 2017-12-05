@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BeFaster.App.Checkout
 {
-    public class Discount
+    public class Discount : IDiscount
     {
         public char Sku { get; }
         public int MatchingQuantity { get; }
@@ -29,6 +29,21 @@ namespace BeFaster.App.Checkout
                 itemsLeft.Remove(item);
             }
             return DiscountValue;
+        }
+    }
+
+    public interface IDiscount
+    {
+        bool CanApplyTo(IList<Item> itemsLeft);
+        int ApplyDiscount(ref IList<Item> itemsLeft);
+        int DiscountValue { get; }
+    }
+
+    public class FreeItemDiscount : IDiscount
+    {
+        public FreeItemDiscount(char c, int matchingQuantity, Item freeItem)
+        {
+
         }
     }
 }

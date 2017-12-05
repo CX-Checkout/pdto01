@@ -7,7 +7,7 @@ namespace BeFaster.App.Checkout
         private readonly Discounts _configuredDiscounts;
         private IList<Item> _items;
 
-        public DiscountEngine(IList<Discount> configuredDiscounts)
+        public DiscountEngine(IList<IDiscount> configuredDiscounts)
         {
             _configuredDiscounts = new Discounts(configuredDiscounts);
         }
