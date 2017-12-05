@@ -5,7 +5,6 @@ namespace BeFaster.App.Checkout
     public class DiscountEngine
     {
         private readonly Discounts _configuredDiscounts;
-        private IList<Item> _items;
 
         public DiscountEngine(IList<IDiscount> configuredDiscounts)
         {
@@ -14,8 +13,7 @@ namespace BeFaster.App.Checkout
 
         public int CalculateDiscount(IList<Item> items)
         {
-            _items = items;
-            var itemsLeft = _items;
+            var itemsLeft = items;
             int totalDiscount = 0;
             while (_configuredDiscounts.CanApplyTo(itemsLeft))
             {

@@ -5,9 +5,9 @@ namespace BeFaster.App.Checkout
 {
     public class GroupDiscount : IDiscount
     {
-        public char[] Skus { get; }
-        public int MatchingQuantity { get; }
-        public int ForfaitPrice { get; }
+        private char[] Skus { get; }
+        private int MatchingQuantity { get; }
+        private int ForfaitPrice { get; }
         public int DiscountValue => 15; 
 
         public GroupDiscount(string skus, int matchingQuantity, int forfaitPrice)

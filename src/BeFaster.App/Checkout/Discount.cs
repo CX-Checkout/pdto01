@@ -5,8 +5,8 @@ namespace BeFaster.App.Checkout
 {
     public class Discount : IDiscount
     {
-        public char Sku { get; }
-        public int MatchingQuantity { get; }
+        private char Sku { get; }
+        private int MatchingQuantity { get; }
         public int DiscountValue { get; }
 
         public Discount(char sku, int matchingQuantity, int discountAmount)

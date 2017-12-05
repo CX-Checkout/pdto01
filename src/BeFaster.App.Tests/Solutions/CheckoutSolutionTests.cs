@@ -44,4 +44,4 @@ namespace BeFaster.App.Tests.Solutions
             Assert.That(CheckoutSolution.Checkout(skus), Is.EqualTo(expectedTotal));
         }
     }
-}
+}

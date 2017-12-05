@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace BeFaster.App.Checkout
 {
@@ -35,7 +34,7 @@ namespace BeFaster.App.Checkout
             {'Z', new Item('Z', 21)}
         };
 
-        private readonly IList<IDiscount> configuredDiscounts = new List<IDiscount>
+        private readonly IList<IDiscount> _configuredDiscounts = new List<IDiscount>
         {
             new Discount('A', 3, 20), 
             new Discount('A', 5, 50),
@@ -69,7 +68,7 @@ namespace BeFaster.App.Checkout
 
         public int CalculateTotal()
         {
-            return _basket.CalculateTotal(configuredDiscounts);
+            return _basket.CalculateTotal(_configuredDiscounts);
         }
     }
 }
