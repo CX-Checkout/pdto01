@@ -9,7 +9,7 @@ namespace BeFaster.App.Checkout
 
         public Discounts(IList<Discount> configuredDiscounts)
         {
-            _configuredDiscounts = configuredDiscounts.OrderByDescending(d=>d.Condition.Value).ToList();
+            _configuredDiscounts = configuredDiscounts.OrderByDescending(d=>d.DiscountValue).ToList();
         }
 
         public bool CanApplyTo(IList<Item> itemsLeft)
