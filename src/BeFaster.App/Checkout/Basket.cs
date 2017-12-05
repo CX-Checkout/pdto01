@@ -19,12 +19,5 @@ namespace BeFaster.App.Checkout
             var discount = configuredDiscounts != null ? new DiscountEngine(configuredDiscounts).CalculateDiscount(_items) : 0;
             return total - discount;
         }
-
-        private int CalculateDiscount(IList<Discount> configuredDiscounts)
-        {
-            
-        }
-
-       
     }
 }
