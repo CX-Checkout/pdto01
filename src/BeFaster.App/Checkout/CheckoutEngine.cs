@@ -45,6 +45,9 @@ namespace BeFaster.App.Checkout
             new Discount('H', 5, 5),
             new Discount('H', 10, 20),
             new Discount('K', 2, 10),
+            new FreeItemDiscount('N', 3, new Item('M', 15)),
+            new Discount('P', 5, 50),
+
         };
 
         private readonly Basket _basket = new Basket();
