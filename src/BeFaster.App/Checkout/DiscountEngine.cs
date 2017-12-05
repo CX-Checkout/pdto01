@@ -37,7 +37,7 @@ namespace BeFaster.App.Checkout
 
         public bool CanApplyTo(IList<Item> itemsLeft)
         {
-            return _configuredDiscounts.Select(d => d.CanApplyTo(itemsLeft)).Any();
+            return _configuredDiscounts.Any(d => d.CanApplyTo(itemsLeft));
         }
 
         public int ApplyDiscount(ref IList<Item> itemsLeft)
