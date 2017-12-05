@@ -6,6 +6,7 @@ namespace BeFaster.App.Tests.Solutions
     [TestFixture]
     public class CheckoutSolutionTests
     {
+        [TestCase("ABCDEE", 165)]
         [TestCase("AABBCCDDAAB", 325)]
         [TestCase("AAAAA", 200)]
         [TestCase("AAAAAAAA", 330)]
