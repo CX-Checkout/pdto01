@@ -31,11 +31,4 @@ namespace BeFaster.App.Checkout
             return DiscountValue;
         }
     }
-
-    public interface IDiscount
-    {
-        bool CanApplyTo(IList<Item> itemsLeft);
-        int ApplyDiscount(ref IList<Item> itemsLeft);
-        int DiscountValue { get; }
-    }
 }

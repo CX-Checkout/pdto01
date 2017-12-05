@@ -51,7 +51,8 @@ namespace BeFaster.App.Checkout
             new FreeItemDiscount('R', 3, new Item('Q', 30)),
             new Discount('U', 4, 40),
             new Discount('V', 2, 10),
-            new Discount('V', 3, 20)
+            new Discount('V', 3, 20),
+            //new GroupDiscount("STXYZ", 3, 45)
         };
 
         private readonly Basket _basket = new Basket();
@@ -71,6 +72,4 @@ namespace BeFaster.App.Checkout
             return _basket.CalculateTotal(configuredDiscounts);
         }
     }
-
-    
 }

@@ -30,7 +30,8 @@ namespace BeFaster.App.Tests.Solutions
         [TestCase("UUU", 120)]
         [TestCase("UUUU", 120)]
         [TestCase("UUUUU", 160)]
-        [TestCase("VWXYZ", 128)]
+        [TestCase("VWXYZ", 115)]
+        [TestCase("STWXZYZ", 110)]
         [TestCase("QQRRR", 180)]
         [TestCase("RRQRQQ", 210)]
         [TestCase("RRQR", 150)]
@@ -43,4 +44,4 @@ namespace BeFaster.App.Tests.Solutions
             Assert.That(CheckoutSolution.Checkout(skus), Is.EqualTo(expectedTotal));
         }
     }
-}
+}

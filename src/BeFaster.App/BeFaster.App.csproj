@@ -50,6 +50,8 @@
     <Compile Include="Checkout\DiscountEngine.cs" />
     <Compile Include="Checkout\Discounts.cs" />
     <Compile Include="Checkout\FreeItemDiscount.cs" />
+    <Compile Include="Checkout\GroupDiscount.cs" />
+    <Compile Include="Checkout\IDiscount.cs" />
     <Compile Include="Checkout\Item.cs" />
     <Compile Include="SendCommandToServer.cs" />
     <Compile Include="Checkout\Basket.cs" />
