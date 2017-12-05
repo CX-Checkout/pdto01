@@ -17,7 +17,7 @@ namespace BeFaster.App.Checkout
             {'H', new Item('H', 10)},
             {'I', new Item('I', 35)},
             {'J', new Item('J', 60)},
-            {'K', new Item('K', 80)},
+            {'K', new Item('K', 70)},
             {'L', new Item('L', 90)},
             {'M', new Item('M', 15)},
             {'N', new Item('N', 40)},
@@ -25,14 +25,14 @@ namespace BeFaster.App.Checkout
             {'P', new Item('P', 50)},
             {'Q', new Item('Q', 30)},
             {'R', new Item('R', 50)},
-            {'S', new Item('S', 30)},
+            {'S', new Item('S', 20)},
             {'T', new Item('T', 20)},
             {'U', new Item('U', 40)},
             {'V', new Item('V', 50)},
             {'W', new Item('W', 20)},
-            {'X', new Item('X', 90)},
-            {'Y', new Item('Y', 10)},
-            {'Z', new Item('Z', 50)}
+            {'X', new Item('X', 17)},
+            {'Y', new Item('Y', 20)},
+            {'Z', new Item('Z', 21)}
         };
 
         private readonly IList<IDiscount> configuredDiscounts = new List<IDiscount>
@@ -44,7 +44,7 @@ namespace BeFaster.App.Checkout
             new FreeItemDiscount('E', 2, new Item('B', 30)),
             new Discount('H', 5, 5),
             new Discount('H', 10, 20),
-            new Discount('K', 2, 10),
+            new Discount('K', 2, 20),
             new FreeItemDiscount('N', 3, new Item('M', 15)),
             new Discount('P', 5, 50),
             new Discount('Q', 3, 10),
