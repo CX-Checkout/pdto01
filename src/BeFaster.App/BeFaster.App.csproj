@@ -45,7 +45,11 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checkout\CheckoutEngine.cs" />
+    <Compile Include="Checkout\Discount.cs" />
+    <Compile Include="Checkout\Item.cs" />
     <Compile Include="SendCommandToServer.cs" />
+    <Compile Include="Checkout\Basket.cs" />
     <Compile Include="Solutions\CheckoutSolution.cs" />
     <Compile Include="Solutions\FizzBuzzSolution.cs" />
     <Compile Include="Solutions\HelloSolution.cs" />

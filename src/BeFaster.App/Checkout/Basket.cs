@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BeFaster.App.Solutions
+namespace BeFaster.App.Checkout
 {
     public class Basket
     {

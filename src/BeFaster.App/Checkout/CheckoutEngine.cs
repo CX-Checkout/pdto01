@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BeFaster.App.Solutions
+namespace BeFaster.App.Checkout
 {
     public class CheckoutEngine
     {
@@ -13,7 +13,7 @@ namespace BeFaster.App.Solutions
             {'E', new Item('D', 40)}
         };
 
-        private readonly IList<Discount> configuredDiscounts = new List<Discount>
+        private readonly IList<Discount> _configuredDiscounts = new List<Discount>
         {
             new Discount('A', new KeyValuePair<int, int>(3,20), new KeyValuePair<int,int>(5,50)),
             new Discount('B', 15, 2) ,
@@ -34,7 +34,7 @@ namespace BeFaster.App.Solutions
 
         public int CalculateTotal()
         {
-            return _basket.CalculateTotal(configuredDiscounts);
+            return _basket.CalculateTotal(_configuredDiscounts);
         }
     }
 }

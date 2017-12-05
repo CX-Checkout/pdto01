@@ -1,4 +1,4 @@
-namespace BeFaster.App.Solutions
+namespace BeFaster.App.Checkout
 {
     public class Item 
     {
