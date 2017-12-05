@@ -52,7 +52,7 @@ namespace BeFaster.App.Checkout
             new Discount('U', 4, 40),
             new Discount('V', 2, 10),
             new Discount('V', 3, 20),
-            //new GroupDiscount("STXYZ", 3, 45)
+            new GroupDiscount("STXYZ", 3, 45)
         };
 
         private readonly Basket _basket = new Basket();

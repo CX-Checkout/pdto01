@@ -8,6 +8,7 @@ namespace BeFaster.App.Checkout
         public char[] Skus { get; }
         public int MatchingQuantity { get; }
         public int ForfaitPrice { get; }
+        public int DiscountValue => 15; 
 
         public GroupDiscount(string skus, int matchingQuantity, int forfaitPrice)
         {
@@ -23,9 +24,12 @@ namespace BeFaster.App.Checkout
 
         public int ApplyDiscount(ref IList<Item> itemsLeft)
         {
-            throw new System.NotImplementedException();
+            var itemDiscounted = itemsLeft.Where(item => Skus.Contains(item.Sku)).OrderByDescending(item => item.Price).Take(MatchingQuantity).ToList();
+            foreach (var item in itemDiscounted)
+            {
+                itemsLeft.Remove(item);
+            }
+            return itemDiscounted.Sum(item=>item.Price) - ForfaitPrice;
         }
-
-        public int DiscountValue { get; }
     }
 }
