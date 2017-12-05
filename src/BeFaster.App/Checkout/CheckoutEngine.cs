@@ -48,7 +48,8 @@ namespace BeFaster.App.Checkout
             new FreeItemDiscount('N', 3, new Item('M', 15)),
             new Discount('P', 5, 50),
             new Discount('Q', 3, 10),
-            new FreeItemDiscount('R', 3, new Item('Q', 30))
+            new FreeItemDiscount('R', 3, new Item('Q', 30)),
+            new Discount('U', 4, 40)
 
         };
 
